@@ -1,0 +1,87 @@
+﻿@implements IDisposable
+<PageTitle>@counter</PageTitle>
+
+
+<div class="container">
+
+
+    <Progress Visible="@_visibleProgressBar" Value="@_progressBarPercentage" style="height: 50px;" Striped="true" />
+    <br />
+    <br />
+
+
+
+
+
+    <Slider TValue="int" Value="@_sliderValue" Max="60" ValueChanged="((e)=>SetSliderValue(e))" />
+
+    <Button Color="Color.Primary" @onclick="StartTimer" Disabled="@_timerRunning">Start timer </Button>
+
+    @*<h2>@_sliderValue - slider value</h2> - slider value
+
+
+
+        <span class="text-2xl px-8">@_sliderValue</span> seconds*@
+</div>
+
+
+@code {
+
+    private static System.Timers.Timer _timer;
+    private int counter = 15;
+    private float _counterStartingValue = 15;
+    private bool _visibleProgressBar = false;
+    private int _progressBarPercentage = 100;
+    private int _sliderValue = 25;
+    private bool _timerRunning = false;
+
+    private void SetSliderValue(int value)
+    {
+        _sliderValue = value;
+    }
+
+
+    private void StartTimer()
+    {
+        //playSound = false;
+
+        _timerRunning = true;
+        counter = _sliderValue;
+        _counterStartingValue = counter;
+        _timer = new System.Timers.Timer(1000); // sekunda
+        _timer.Elapsed += CountDownTimer;
+        _timer.Enabled = true;
+    }
+
+
+    public void CountDownTimer(Object source, System.Timers.ElapsedEventArgs e)
+    {
+        if (counter > 0)
+        {
+            counter -= 1;
+            _visibleProgressBar = true;
+
+
+
+
+
+
+            _progressBarPercentage = (int)((counter / _counterStartingValue) * 100);
+        }
+        else
+        {
+            //playSound = true;
+            _timer.Enabled = false;
+            _visibleProgressBar = false;
+            _progressBarPercentage = 100;
+            _timerRunning = false;
+        }
+        InvokeAsync(StateHasChanged);
+    }
+
+    public void Dispose()
+    {
+        _timer?.Dispose();
+    }
+}
+
