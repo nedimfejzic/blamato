@@ -1,9 +1,8 @@
-﻿<Button Color="Color.Primary" Clicked="@ShowModal">Show Modal</Button>
-
+﻿
 <Modal @ref="modalRef" Closing="@OnModalClosing">
     <ModalContent Centered>
         <ModalHeader>
-            <ModalTitle>Closing modal</ModalTitle>
+            <ModalTitle>@Title</ModalTitle>
         </ModalHeader>
         <ModalBody>
             Click on the buttons to close the modal.
@@ -18,11 +17,22 @@
 
 
 @code {
+    private string Title = "ovo je naslov";
+
+    public void SetTitle()
+    {
+        Title = "Setovao sam novi naslov -2 ";
+    }
+
+
+
    private Modal modalRef;
+
+
 
     private bool cancelClose;
 
-    private Task ShowModal()
+    public Task ShowModal()
     {
         return modalRef.Show();
     }

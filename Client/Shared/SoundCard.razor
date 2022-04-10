@@ -14,7 +14,7 @@
                 }
                 else
                 {
-                <Icon Name="IconName.Play" IconSize="IconSize.Default" />
+                <Icon Name="IconName.Play" IconSize="IconSize.Default"  />
                     
                 }
                 </Button>
@@ -26,10 +26,19 @@
 </Card>
 
 
+
+
+<style>
+    i{
+        color: @Theme.ColorOptions.Primary;
+    }
+</style>
+
+
 @code {
 
 
-
+    [CascadingParameter] Theme Theme { get; set; }
 
     [Parameter]
     public string ImageUrl { get; set; }

@@ -9,7 +9,7 @@
 <div class="container">
 
 
-    <Progress Visible="@_visibleProgressBar" Value="@_progressBarPercentage" style="height: 50px;" Striped="true" Animated="@_animateProgressBar" Color="Color.Danger" />
+    <Progress Visible="@_visibleProgressBar" Value="@_progressBarPercentage" style="height: 50px;" Striped="true" Animated="@_animateProgressBar" Color="Theme.ColorOptions.Primary" />
     <br />
     <br />
 
@@ -28,11 +28,15 @@
 
 
         <span class="text-2xl px-8">@_sliderValue</span> seconds*@
+
+
+        <ModalTest @ref="mojModal1"/>
 </div>
 
 
 @code {
 
+        [CascadingParameter] Theme Theme { get; set; }
 
 
     private static System.Timers.Timer _timer;
@@ -43,6 +47,14 @@
     private int _sliderValue = 25;
     private bool _timerRunning = false;
     private bool _animateProgressBar = false;
+
+
+    private ModalTest mojModal1;
+
+    private void ShowModal()
+    {
+        mojModal1.ShowModal();
+    }   
 
 
     private void SetSliderValue(int value)
@@ -87,6 +99,7 @@
             _progressBarPercentage = 100;
             _animateProgressBar = false;
             _timerRunning = false;
+            ShowModal();
         }
         InvokeAsync(StateHasChanged);
     }

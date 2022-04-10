@@ -1,4 +1,5 @@
 ﻿@page "/"
+@inject INotificationService NotificationService
 
 <PageTitle>Blamato - Helping track your time</PageTitle>
 
@@ -6,35 +7,87 @@
 
 
 <div class="container">
-               <div class="row">
-                        <SoundCard 
-                ImageUrl="https://images.unsplash.com/photo-1428592953211-077101b2021b?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1074&q=80"
-                AudioLocation="assets/rain1.wav"
-                AudioTag="rain1"
-                />
+    <div class="row">
+        <SoundCard ImageUrl="https://images.unsplash.com/photo-1428592953211-077101b2021b?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1074&q=80"
+                   AudioLocation="assets/rain1.wav"
+                   AudioTag="rain1" />
 
 
-                  <SoundCard 
-                ImageUrl="https://images.unsplash.com/photo-1517594422361-5eeb8ae275a9?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1170&q=80"
-                AudioLocation="assets/fire.wav"
-                AudioTag="fire1"
-                />
+        <SoundCard ImageUrl="https://images.unsplash.com/photo-1517594422361-5eeb8ae275a9?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1170&q=80"
+                   AudioLocation="assets/fire.wav"
+                   AudioTag="fire1" />
 
 
-                
-                <SoundCard 
-                ImageUrl="https://images.unsplash.com/photo-1506477331477-33d5d8b3dc85?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=734&q=80"
-                AudioLocation="assets/beach.wav"
-                AudioTag="beach1"
-                />
-               </div>
 
+        <SoundCard ImageUrl="https://images.unsplash.com/photo-1506477331477-33d5d8b3dc85?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=734&q=80"
+                   AudioLocation="assets/beach.wav"
+                   AudioTag="beach1" />
+    </div>
+
+
+
+    <Button Clicked="@(()=>OnThemeColorChanged())">Change theme</Button>
+    <Button Color="Color.Warning" Clicked="@ShowWarningNotification">Show alert!</Button>
 
 
 </div>
-<ModalTest/>
+
+
+<Button Color="Color.Primary" Clicked="@(()=>snackbarPrimary.Show())">Primary</Button>
+<Button Color="Color.Secondary" Clicked="@(()=>snackbarSecondary.Show())">Secondary</Button>
+
+<Snackbar @ref="snackbarPrimary" Color="SnackbarColor.Primary">
+  <SnackbarBody>
+    Single line of text directly related to the operation performed
+    <SnackbarAction Clicked="@(()=>snackbarPrimary.Hide())">ACTION</SnackbarAction>
+  </SnackbarBody>
+</Snackbar>
+<Snackbar @ref="snackbarSecondary" Color="SnackbarColor.Secondary">
+  <SnackbarBody>
+    Single line of text directly related to the operation performed
+    <SnackbarAction Clicked="@(()=>snackbarSecondary.Hide())">ACTION</SnackbarAction>
+  </SnackbarBody>
+</Snackbar>
+
 
 
 @code {
-   
+           private Snackbar snackbarPrimary;
+    private Snackbar snackbarSecondary;
+
+    Task ShowWarningNotification()
+    {
+        return NotificationService.Info( "This is a simple notification message!", "Hello" );
+    }
+
+    private string getRandColor()
+    {
+        Random rnd = new Random();
+        string hexOutput = String.Format("{0:X}", rnd.Next(0, 0xFFFFFF));
+        while (hexOutput.Length < 6)
+            hexOutput = "0" + hexOutput;
+
+
+        return "#" + hexOutput;
+    }
+
+
+    Task OnThemeColorChanged()
+    {
+
+        string value = getRandColor();
+
+
+        if (Theme?.ColorOptions != null)
+            Theme.ColorOptions.Primary = value;
+
+        if (Theme?.BackgroundOptions != null)
+            Theme.BackgroundOptions.Primary = value;
+
+        Theme.ThemeHasChanged();
+
+        return Task.CompletedTask;
+    }
+
+    [CascadingParameter] Theme Theme { get; set; }
 }
