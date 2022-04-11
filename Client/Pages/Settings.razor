@@ -1,12 +1,84 @@
 ﻿@page "/settings"
 
-<div class="container-lg">
-    <h3>Settings</h3>
+<div class="container-sm">
+    <h3>Timer settings</h3>
 
-<p>Tick sound - xxxx</p>
-<p>Complete task sound - xxxx</p>
+<div class="row">
+    
+<div class="col-12 col-md-6">
+
+    <Span Class="mb-2">Timing duration:</Span>
+            <Addons> 
+   
+    <Addon AddonType="AddonType.Body">
+       <NumericPicker @bind-Value="@_timerDuration" Decimals="0"  Min="1" Max="120"/>
+    </Addon>
+     <Addon AddonType="AddonType.End">
+        <AddonLabel>minutes</AddonLabel>
+    </Addon>
+</Addons>
+
+     <Slider TValue="int" Value="@_timerDuration" Max="120" ValueChanged="((e)=>SetTimerDuration(e))" Class="my-4"/>
+   <hr />
+
+</div>
+
+<div class="col-12 col-md-6">
+
+    <Span Class="mb-2">Pause duration:</Span>
+            <Addons> 
+   
+    <Addon AddonType="AddonType.Body">
+       <NumericPicker @bind-Value="@_pauseDuration" Decimals="0"  Min="1" Max="30"/>
+    </Addon>
+     <Addon AddonType="AddonType.End">
+        <AddonLabel>minutes</AddonLabel>
+    </Addon>
+</Addons>
+
+     <Slider TValue="int" Value="@_pauseDuration" Max="120" ValueChanged="((e)=>SetPauseDuration(e))" Class="my-4"/>
+   <hr />
+
+</div>
+
+
+
+
+
+<div class="col-12 col-md-6">
+
+    <Span Class="mb-2">Alarm sound:</Span>
+<Select TValue="int">
+    <SelectItem Value="1">One</SelectItem>
+    <SelectItem Value="2">Two</SelectItem>
+    <SelectItem Value="3">Three</SelectItem>
+    <SelectItem Value="4">Four</SelectItem>
+</Select>
+   <hr />
+
+</div>
+
+
+
+
+
+
+</div>
+
 
 </div>
 @code {
+    private int _timerDuration = 25;
+    private int _pauseDuration = 5;
 
+    
+    private void SetTimerDuration(int value)
+    {
+        _timerDuration = value;
+    }
+
+     private void SetPauseDuration(int value)
+    {
+        _pauseDuration = value;
+    }
 }

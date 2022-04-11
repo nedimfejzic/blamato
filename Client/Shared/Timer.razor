@@ -2,74 +2,101 @@
 
 @if (_timerRunning)
 {
-    <PageTitle>@counter</PageTitle>
+    <PageTitle>Blamato: @_timeRemaing</PageTitle>
 }
 
 
-<div class="container">
+
+    <Card Class="my-2">
+        <div class="row gx-0 my-3 pe-4">
+
+        <div class="col-2 col-md-1 text-center">
+            <Button @onclick="StartTimer" Disabled="@_timerRunning">
+                @if (_timerRunning)
+                {
+                    <Icon Name="IconName.Pause" IconSize="IconSize.x2" />
+
+                }
+                else
+                {
+                    <Icon Name="IconName.Play" IconSize="IconSize.x2" />
+                }
+            </Button>
+
+        </div>
+        <div class="col-10 col-md-11">
+
+            <Progress Visible="@_visibleProgressBar" Value="@_progressBarPercentage" style="height: 50px;" Striped="true" Animated="@_animateProgressBar" Color="Theme.ColorOptions.Primary">
+                <Span Class="font-size-lg font-monospace" Style=" text-shadow: 1px 1px 1px #2e2e2e; font-size:18px;">
+                    @_timeRemaing
+                </Span>
+            </Progress>
+
+        </div>
 
 
-    <Progress Visible="@_visibleProgressBar" Value="@_progressBarPercentage" style="height: 50px;" Striped="true" Animated="@_animateProgressBar" Color="Theme.ColorOptions.Primary" />
-    <br />
-    <br />
+
+
+    </div>
+
+    </Card>
+
+    
 
 
 
-
-
-    <Slider TValue="int" Value="@_sliderValue" Max="60" ValueChanged="((e)=>SetSliderValue(e))" />
-
-    <Button Color="Color.Primary" @onclick="StartTimer" Disabled="@_timerRunning">Start timer </Button>
-
-
-
-    @*<h2>@_sliderValue - slider value</h2> - slider value
-
-
-
-        <span class="text-2xl px-8">@_sliderValue</span> seconds*@
-
-
-        <ModalTest @ref="mojModal1"/>
-</div>
 
 
 @code {
+    [Parameter]
+    public EventCallback<string> OnTimerCompleted{ get; set; }
 
-        [CascadingParameter] Theme Theme { get; set; }
+    public async Task TimerCompleted()
+    {
+        await OnTimerCompleted.InvokeAsync("ovo je pozvano iz timer components");
+    }
+
+
+
+    [CascadingParameter] Theme Theme { get; set; }
 
 
     private static System.Timers.Timer _timer;
-    private int counter = 15;
-    private float _counterStartingValue = 15;
+    private int _time = 15;
+    private float __timeStartingValue = 15;
     private bool _visibleProgressBar = false;
     private int _progressBarPercentage = 100;
-    private int _sliderValue = 25;
     private bool _timerRunning = false;
     private bool _animateProgressBar = false;
 
 
     private ModalTest mojModal1;
 
-    private void ShowModal()
+    private string _timeRemaing = "Lets go boisss";
+
+    private string CalculateRemainingTimeDescription(int seconds)
     {
-        mojModal1.ShowModal();
-    }   
+        var message = TimeSpan.FromSeconds(seconds).ToString();
+
+        if (seconds > 3600)
+        {
+            return message;
+        }
+        else
+        {
+            // 00:25:59 to 25:59 - just formating
+            return message.Substring(3);
+        }
 
 
-    private void SetSliderValue(int value)
-    {
-        _sliderValue = value;
     }
 
 
     private void StartTimer()
     {
-        //playSound = false;
 
         _timerRunning = true;
-        counter = _sliderValue;
-        _counterStartingValue = counter;
+        __timeStartingValue = _time;
         _animateProgressBar = true;
         _timer = new System.Timers.Timer(1000); // sekunda
         _timer.Elapsed += CountDownTimer;
@@ -79,17 +106,12 @@
 
     public void CountDownTimer(Object source, System.Timers.ElapsedEventArgs e)
     {
-        if (counter > 0)
+        if (_time > 0)
         {
-            counter -= 1;
+            _time -= 1;
             _visibleProgressBar = true;
-
-
-
-
-
-
-            _progressBarPercentage = (int)((counter / _counterStartingValue) * 100);
+            _progressBarPercentage = (int)((_time / __timeStartingValue) * 100);
+            _timeRemaing = CalculateRemainingTimeDescription(_time);
         }
         else
         {
@@ -99,7 +121,7 @@
             _progressBarPercentage = 100;
             _animateProgressBar = false;
             _timerRunning = false;
-            ShowModal();
+            TimerCompleted();
         }
         InvokeAsync(StateHasChanged);
     }

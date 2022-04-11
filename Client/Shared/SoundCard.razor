@@ -1,7 +1,11 @@
 ﻿@inject IJSRuntime JsRuntime
 
-<Card class="w-25 ">
-    <img src="@ImageUrl" style="height:150px; object-fit: cover;" />
+<Card class="">
+    <div class="mx-auto mt-4"> 
+           <Figure Size="FigureSize.Is64x64">
+    <FigureImage Source="@ImageUrl" AlternateText="@AudioTag" />
+</Figure>
+    </div>
     <CardBody>
           <div class="visually-hidden">  <audio id="@AudioTag" loop controls src="@AudioLocation"></audio></div>
          
