@@ -4,34 +4,70 @@
 <PageTitle>Blamato - Helping track your time</PageTitle>
 
 <div class="container">
-        <Timer
-            OnTimerCompleted="ClientTimerCompleted"
-        />
-        <AmbientSounds/>
+
+
+ @*   <Timer Duration="19"
+           OnTimerCompleted="ClientTimerCompleted" />*@
+
+           @if (showRunningTimer)
+    {
+        
+        <Countdown Duration="30"
+                      TextColor="TextColor.Primary"
+                      ProgressBarColor="Color.Primary"
+                      TimerDescription="lets work"
+                      OnTimerCompleted="workingTimerCompleted"
+                      @ref="workingTimer"
+                      />
+    }
+    else
+    {
+        
+          <Countdown Duration="10"
+                      TextColor="TextColor.Dark"
+                      ProgressBarColor="Color.Dark"
+                      TimerDescription="deserved rest"
+                      OnTimerCompleted="restingTimerCompleted"
+                      @ref="restingTimer"
+                      
+                      />
+    }
+
+
+
+   
+          
+
+    <AmbientSounds />
 </div>
 
 
 
 @code {
+    private Countdown workingTimer;
+    private Countdown restingTimer;
 
-     private async Task ClientTimerCompleted(string value)
+    private bool showRunningTimer = true;
+  
+
+    private async Task workingTimerCompleted(string value)
     {
-        Console.WriteLine(value);
+        Console.WriteLine(value  + " --  WORK DONE");
+
+        showRunningTimer = !showRunningTimer;
+        await Task.Delay(2000);
+        //restingTimer.StartTimer();
+    }
+    private async Task restingTimerCompleted(string value)
+    {
+        Console.WriteLine(value + " --  RESTING GOTOV");
+        showRunningTimer = !showRunningTimer;
+        await Task.Delay(2000);
+
+        //workingTimer.StartTimer();
+
     }
 
-
-
-
-
-
-
-
-
-
-
-
-
-   
     [CascadingParameter] Theme Theme { get; set; }
     private string getRandColor()
     {

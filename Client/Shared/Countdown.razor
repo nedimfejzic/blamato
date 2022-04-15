@@ -1,0 +1,168 @@
+﻿@implements IDisposable
+
+@if (_timerRunning)
+{
+    <PageTitle>Blamato: @_timerStateDescription</PageTitle>
+}
+    
+    <Card Class="my-2">
+        <div class="row gx-0 my-3 pe-4">
+
+        <div class="col-2 col-md-1 text-center">
+
+              @if (_timerRunning)
+                {
+                      <Button @onclick="PauseTimer"  TextColor="@TextColor"  >
+                                   <Icon Name="IconName.Pause" IconSize="IconSize.x2" />
+
+            </Button>
+
+            }
+            else
+            {
+                  <Button @onclick="StartTimer"  TextColor="@TextColor"  >
+                    <Icon Name="IconName.Play" IconSize="IconSize.x2" />
+            </Button>
+            }
+
+        </div>
+        <div class="col-10 col-md-11">
+  <Progress Visible="@_visibleProgressBar" Value="@_progressBarPercentage" style="height: 50px;" Striped="true" Animated="@_animateProgressBar" Color="ProgressBarColor" >
+                <Span Class="font-size-lg font-monospace" Style=" text-shadow: 1px 1px 1px #2e2e2e; font-size:18px;">
+                    @_timerStateDescription
+                </Span>
+            </Progress>
+
+        </div>
+    </div>
+
+    </Card>
+
+
+
+@code {
+
+    [Parameter]
+    public Blazorise.Color ProgressBarColor { get; set; }
+    [Parameter]
+    public Blazorise.TextColor TextColor { get; set; }
+
+    [Parameter]
+    public EventCallback<string> OnTimerCompleted{ get; set; }
+
+
+    private static System.Timers.Timer Timer;
+
+
+    [Parameter]
+    public int Duration { get; set; } = 60;
+    [Parameter]
+    public string TimerDescription { get; set; }
+
+    private bool _timerPaused = false;
+    private bool _timerRunning = false;
+    private int _timerStartingValue = 15;
+    private bool _visibleProgressBar = false;
+    private int _progressBarPercentage = 100;
+    private bool _animateProgressBar = false;
+    private string _timerStateDescription;
+
+
+
+
+
+
+    public async Task TimerCompleted()
+    {
+        //Duration = _timerStartingValue;
+        _timerStateDescription = "GOTOVO";
+        await OnTimerCompleted.InvokeAsync("ovo je pozvano iz timer components" + _timerStartingValue.ToString());
+    }
+
+
+
+    protected override void OnInitialized()
+    {
+        _timerStartingValue = Duration;
+        _timerStateDescription = TimerDescription;
+    }
+
+    private string CalculateRemainingTimeDescription(int seconds)
+    {
+        var message = TimeSpan.FromSeconds(seconds).ToString();
+
+        if (seconds > 3600)
+        {
+            return message;
+        }
+        else
+        {
+            // 00:25:59 to 25:59 - just formating
+            return message.Substring(3);
+        }
+    }
+
+
+    public void StartTimer()
+    {
+        if (_timerPaused)
+        {
+            Timer.Start();
+        Console.WriteLine("odpauzirano na - " + Duration + " sekundi");
+            
+        }
+        else
+        {
+        Timer = new System.Timers.Timer(1000); // sekunda
+        Timer.Elapsed += CountDownTimer;
+        Timer.Enabled = true;
+        Console.WriteLine("startano na - " + Duration + " sekundi");
+
+        }
+
+         _animateProgressBar = true;
+
+    
+    }
+    public void PauseTimer()
+    {
+        Console.WriteLine("pazirano na - " + Duration + " sekundi");
+
+        _timerPaused = true;
+         _animateProgressBar = false;
+        _timerRunning = false;
+
+        Timer.Stop();
+
+
+    }
+
+    public async void CountDownTimer(Object source, System.Timers.ElapsedEventArgs e)
+    {
+        if (Duration > 0)
+        {
+        _timerRunning = true;
+            Duration -= 1;
+            _visibleProgressBar = true;
+            _progressBarPercentage = (int)(((float)Duration / _timerStartingValue) * 100);
+            _timerStateDescription = CalculateRemainingTimeDescription(Duration);
+        }
+        else
+        {
+
+            Timer.Enabled = false;
+            _visibleProgressBar = false;
+            _progressBarPercentage = 100;
+            _animateProgressBar = false;
+            _timerRunning = false;
+             TimerCompleted();
+        }
+        await InvokeAsync(StateHasChanged);
+    }
+
+    public void Dispose()
+    {
+        Timer?.Dispose();
+    }
+}
+
