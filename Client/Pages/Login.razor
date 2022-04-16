@@ -1,0 +1,48 @@
+﻿@page "/login"
+    <div class="container">
+        <div class="row">
+            <div class="col-md-4 offset-md-4">
+                <div class="login-form mt-4 p-4" style="background-color: #F8F8F8;">
+                    <form action="" method="" class="row g-3">
+                        <Heading Size="HeadingSize.Is4" TextColor="TextColor.Primary">Welcome back!</Heading>
+                        <div class="col-12">
+
+
+
+                            <label>Email</label>
+                            <input type="text" name="username" class="form-control" placeholder="mail@outlook.com">
+
+
+
+
+
+                        </div>
+                        <div class="col-12">
+                            <label>Password</label>
+                            <input type="password" name="password" class="form-control" placeholder="Password">
+                        </div>
+
+                        <div class="col-12">
+        <Button Color="Color.Primary" Block @onclick="SaveMe">Login</Button>
+
+                        </div>
+                    </form>
+                    <hr class="mt-4">
+                    <div class="col-12">
+                        <p class="text-center mb-0">Have not account yet? <Link To="/registration" TextColor="TextColor.Primary">Register</Link></p>
+                          
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+
+    @code{
+
+    private async Task SaveMe()
+    {
+        Console.WriteLine("btn login clicked");
+    }
+    }

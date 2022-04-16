@@ -76,7 +76,7 @@
     {
         //Duration = _timerStartingValue;
         _timerStateDescription = "GOTOVO";
-        await OnTimerCompleted.InvokeAsync("ovo je pozvano iz timer components" + _timerStartingValue.ToString());
+        await OnTimerCompleted.InvokeAsync(_timerStartingValue.ToString());
     }
 
 

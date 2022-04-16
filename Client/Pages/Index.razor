@@ -12,7 +12,7 @@
            @if (showRunningTimer)
     {
         
-        <Countdown Duration="30"
+        <Countdown Duration="14"
                       TextColor="TextColor.Primary"
                       ProgressBarColor="Color.Primary"
                       TimerDescription="lets work"
@@ -39,6 +39,9 @@
           
 
     <AmbientSounds />
+
+
+    <ModalSaveTime @ref="modalSave"/>
 </div>
 
 
@@ -46,17 +49,35 @@
 @code {
     private Countdown workingTimer;
     private Countdown restingTimer;
+    private ModalSaveTime modalSave;
+
+
+    protected override void OnAfterRender(bool firstRender)
+    {
+        modalSave.ShowModal();
+    }
+
+
+
+
+
+
 
     private bool showRunningTimer = true;
-  
+
 
     private async Task workingTimerCompleted(string value)
     {
         Console.WriteLine(value  + " --  WORK DONE");
 
         showRunningTimer = !showRunningTimer;
+
+         modalSave.TimeSpent=value;
+        modalSave.ShowModal();
         await Task.Delay(2000);
-        //restingTimer.StartTimer();
+
+       
+       //restingTimer.StartTimer();
     }
     private async Task restingTimerCompleted(string value)
     {

@@ -12,6 +12,7 @@
         <span class="navbar-toggler-icon"></span>
       </button>
 
+      @*<div class="@NavMenuCssClass" @onclick="ToggleNavMenu">*@
       <div class="collapse navbar-collapse" id="navbarsExample07XL">
         <ul class="navbar-nav ms-auto mb-2 mb-lg-0">
           <li class="nav-item">
@@ -24,9 +25,8 @@
           <li class="nav-item dropdown">
             <a class="nav-link dropdown-toggle" href="#" id="dropdown07XL" data-bs-toggle="dropdown" aria-expanded="false">User</a>
             <ul class="dropdown-menu" aria-labelledby="dropdown07XL">
-              <li><a class="dropdown-item" href="#">Login</a></li>
-              <li><a class="dropdown-item" href="#">Register an acc</a></li>
-              <li><a class="dropdown-item" href="#">Stats</a></li>
+              <li><a class="dropdown-item" href="/login">Login</a></li>
+              <li><a class="dropdown-item" href="#">Register an account</a></li>
             </ul>
           </li>
         </ul>
@@ -34,3 +34,22 @@
       </div>
     </div>
   </nav>
+
+
+
+
+  
+@code {
+
+    //private bool collapseNavMenu = true;
+
+    //private string NavMenuCssClass => collapseNavMenu ? "collapse" : null;
+
+
+
+
+    //private void ToggleNavMenu()
+    //{
+    //    collapseNavMenu = !collapseNavMenu;
+    //}
+}

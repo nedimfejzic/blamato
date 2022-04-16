@@ -1,0 +1,121 @@
+﻿
+<Modal @ref="modalRef" Closing="@OnModalClosing">
+    <ModalContent Centered>
+        <ModalHeader>
+            <ModalTitle>Save spent time</ModalTitle>
+        </ModalHeader>
+        <ModalBody>
+          <div class="container">
+                Click on the buttons to close the modal.
+            <br />
+            <p>Spent - <span class="strong">@CalculateRemainingTimeDescription(TimeSpent)</span></p>
+
+          <div class="row my-1">
+              <div class="col-10 ">
+                    <Select TValue="int">
+                <SelectItem Value="1">German language</SelectItem>
+                <SelectItem Value="2">C#</SelectItem>
+                <SelectItem Value="3">Blazor</SelectItem>
+                <SelectItem Value="4">React</SelectItem>
+            </Select>
+              </div>
+            <div class="col-2 ">
+                 <Button    >
+                                   <Icon Name="IconName.Add" IconSize="IconSize.Default" />
+
+            </Button> 
+            </div>
+          </div>
+
+         <div class="my-2">
+               <MemoEdit Rows="5"   ReplaceTab/>
+         </div>
+
+
+
+          </div>
+
+        </ModalBody>
+        <ModalFooter>
+            <Button Color="Color.Primary" Clicked="@CloseModal">This will close the modal</Button>
+            <Button Color="Color.Light" Clicked="@TryCloseModal">This will not</Button>
+        </ModalFooter>
+    </ModalContent>
+</Modal>
+
+
+
+@code {
+    [Parameter]
+    public string TimeSpent { get; set; } = "360";
+
+
+
+    private string CalculateRemainingTimeDescription(string value = "360")
+    {
+        int seconds;
+
+        if(  Int32.TryParse(value, out seconds))
+        {
+            var message = TimeSpan.FromSeconds(seconds).ToString();
+
+            if (seconds > 3600)
+            {
+                return message;
+            }
+            else
+            {
+                // 00:25:59 to 25:59 - just formating
+                return message.Substring(3);
+            }       
+        }
+        return "****";
+
+    }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+   private Modal modalRef;
+
+    private bool cancelClose;
+
+    public Task ShowModal()
+    {
+        return modalRef.Show();
+    }
+
+    private Task CloseModal()
+    {
+        cancelClose = false;
+
+        return modalRef.Hide();
+    }
+
+    private Task TryCloseModal()
+    {
+        cancelClose = true;
+
+        return modalRef.Hide();
+    }
+    private Task OnModalClosing( ModalClosingEventArgs e )
+    {
+        // just set Cancel to prevent modal from closing
+        e.Cancel = cancelClose 
+            || e.CloseReason != CloseReason.UserClosing;
+
+        return Task.CompletedTask;
+    }
+}
