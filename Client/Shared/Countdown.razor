@@ -1,4 +1,6 @@
 ﻿@implements IDisposable
+@inject IJSRuntime _js
+
 
 @if (_timerRunning)
 {
@@ -39,6 +41,11 @@
     </Card>
 
 
+        <audio id="tickSound" loop   src="/assets/tick1.wav"></audio>
+        <audio id="finishSound"  src="/assets/alert1.wav"></audio>
+
+
+
 
 @code {
 
@@ -53,7 +60,8 @@
 
     private static System.Timers.Timer Timer;
 
-
+    [Parameter]
+    public bool WorkingTimer { get; set; } = true;
     [Parameter]
     public int Duration { get; set; } = 60;
     [Parameter]
@@ -76,16 +84,26 @@
     {
         //Duration = _timerStartingValue;
         _timerStateDescription = "GOTOVO";
+
+        await _js.InvokeVoidAsync("StartPlayer", "finishSound");
+
+        await Task.Delay(2000);
+
         await OnTimerCompleted.InvokeAsync(_timerStartingValue.ToString());
     }
 
 
 
-    protected override void OnInitialized()
+    protected override  void OnInitialized()
     {
         _timerStartingValue = Duration;
         _timerStateDescription = TimerDescription;
+
     }
+
+
+
+
 
     private string CalculateRemainingTimeDescription(int seconds)
     {
@@ -103,8 +121,18 @@
     }
 
 
-    public void StartTimer()
-    {
+    public async void StartTimer()
+    {   
+
+        if (WorkingTimer)
+        {
+            await _js.InvokeVoidAsync("SetPlayerVolume", "tickSound", "0.05");
+            await _js.InvokeVoidAsync("SetPlayerVolume", "finishSound", "0.5");
+            //await _js.InvokeVoidAsync("StartPlayer", "tickSound");
+            //await _js.InvokeVoidAsync("finishSound", "tickSound");
+        }
+
+
         if (_timerPaused)
         {
             Timer.Start();

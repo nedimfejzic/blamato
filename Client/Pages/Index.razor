@@ -3,81 +3,63 @@
 
 <PageTitle>Blamato - Helping track your time</PageTitle>
 
-<div class="container">
+<div class="container mb-5">
 
+    @*   <Timer Duration="19"
+        OnTimerCompleted="ClientTimerCompleted" />*@
 
- @*   <Timer Duration="19"
-           OnTimerCompleted="ClientTimerCompleted" />*@
-
-           @if (showRunningTimer)
+    @if (showRunningTimer)
     {
-        
         <Countdown Duration="14"
-                      TextColor="TextColor.Primary"
-                      ProgressBarColor="Color.Primary"
-                      TimerDescription="lets work"
-                      OnTimerCompleted="workingTimerCompleted"
-                      @ref="workingTimer"
-                      />
+               TextColor="TextColor.Primary"
+               ProgressBarColor="Color.Primary"
+               TimerDescription="lets work"
+               OnTimerCompleted="workingTimerCompleted"
+               WorkingTimer="true"
+               @ref="workingTimer" />
     }
     else
     {
-        
-          <Countdown Duration="10"
-                      TextColor="TextColor.Dark"
-                      ProgressBarColor="Color.Dark"
-                      TimerDescription="deserved rest"
-                      OnTimerCompleted="restingTimerCompleted"
-                      @ref="restingTimer"
-                      
-                      />
+        <Countdown Duration="10"
+               TextColor="TextColor.Dark"
+               ProgressBarColor="Color.Dark"
+               TimerDescription="deserved rest"
+               OnTimerCompleted="restingTimerCompleted"
+               WorkingTimer="false"
+               @ref="restingTimer" />
     }
 
-
-
-   
-          
+    <MotivationCards />
 
     <AmbientSounds />
 
-
-    <ModalSaveTime @ref="modalSave"/>
+    <ModalSaveTime @ref="modalSave" />
 </div>
-
-
 
 @code {
     private Countdown workingTimer;
     private Countdown restingTimer;
     private ModalSaveTime modalSave;
 
-
     protected override void OnAfterRender(bool firstRender)
     {
-        modalSave.ShowModal();
+        //modalSave.ShowModal();
     }
-
-
-
-
-
-
 
     private bool showRunningTimer = true;
 
-
     private async Task workingTimerCompleted(string value)
     {
-        Console.WriteLine(value  + " --  WORK DONE");
+        Console.WriteLine(value + " --  WORK DONE");
 
         showRunningTimer = !showRunningTimer;
 
-         modalSave.TimeSpent=value;
+        modalSave.TimeSpent = value;
         modalSave.ShowModal();
         await Task.Delay(2000);
 
-       
-       //restingTimer.StartTimer();
+
+        //restingTimer.StartTimer();
     }
     private async Task restingTimerCompleted(string value)
     {

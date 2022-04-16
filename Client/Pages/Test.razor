@@ -1,0 +1,138 @@
+﻿@page "/test"
+
+
+<div class="container">
+	<Span TextColor="TextColor.Primary">@counter</Span>
+ 
+	<br />
+	<br />
+	<br />
+	<br />
+
+
+
+
+
+
+<Button @onclick="uvecaj">click +1</Button>
+
+</div>
+
+
+
+
+<div class="container py-7">
+	<div class="row row-cols-1 row-cols-md-2 justify-content-center row-cols-lg-3 py-4 g-4 counter-1">
+		<div class="col">
+			<div class="card card-body shadow">
+				<div class="d-inline-flex align-items-center" style="min-height:128px">
+					<div class="me-2">
+						<div class="bg-light p-3 rounded-circle">
+							<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" version="1.1" class="" width="2em" height="2em" viewBox="0 0 24 24" style="" lc-helper="svg-icon" fill="currentColor">
+								<path d="M4,2A1,1 0 0,0 3,3V4A1,1 0 0,0 4,5H5V14H11V16.59L6.79,20.79L8.21,22.21L11,19.41V22H13V19.41L15.79,22.21L17.21,20.79L13,16.59V14H19V5H20A1,1 0 0,0 21,4V3A1,1 0 0,0 20,2H4Z"></path>
+							</svg>
+						</div>
+					</div>
+					<div>
+						<span class="fw-bold display-5 mb-5" data-vanilla-counter="" data-start-at="0" data-end-at="125" data-time="1000" data-delay="60" data-format="{}">125</span>
+						<p class="lead" editable="inline"><span><b>Projects</b></span> Done</p>
+					</div>
+				</div>
+			</div>
+		</div>
+		<div class="col">
+			<div class="card card-body shadow">
+				<div class="d-inline-flex align-items-center" style="min-height:128px">
+					<div class="me-2">
+						<div class="bg-light p-3 rounded-circle">
+							<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" version="1.1" width="2em" height="2em" viewBox="0 0 24 24" lc-helper="svg-icon" fill="currentColor">
+								<path d="M16 17V19H2V17S2 13 9 13 16 17 16 17M12.5 7.5A3.5 3.5 0 1 0 9 11A3.5 3.5 0 0 0 12.5 7.5M15.94 13A5.32 5.32 0 0 1 18 17V19H22V17S22 13.37 15.94 13M15 4A3.39 3.39 0 0 0 13.07 4.59A5 5 0 0 1 13.07 10.41A3.39 3.39 0 0 0 15 11A3.5 3.5 0 0 0 15 4Z"></path>
+							</svg>
+						</div>
+					</div>
+					<div>
+						<span class="fw-bold display-5 mb-5" data-vanilla-counter="" data-start-at="0" data-end-at="53" data-time="1000" data-delay="60" data-format="{}">53</span>
+						<p class="lead" editable="inline"><b>Customers</b> Satisfied</p>
+					</div>
+				</div>
+			</div>
+		</div>
+		<div class="col">
+			<div class="card card-body shadow">
+				<div class="d-inline-flex align-items-center" style="min-height:128px">
+					<div class="me-2">
+						<div class="bg-light p-3 rounded-circle">
+							<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" version="1.1" width="2em" height="2em" viewBox="0 0 24 24" lc-helper="svg-icon" fill="currentColor">
+								<path d="M13,17V19H14A1,1 0 0,1 15,20H22V22H15A1,1 0 0,1 14,23H10A1,1 0 0,1 9,22H2V20H9A1,1 0 0,1 10,19H11V17H5V15.5C5,13.57 8.13,12 12,12C15.87,12 19,13.57 19,15.5V17H13M12,3A3.5,3.5 0 0,1 15.5,6.5A3.5,3.5 0 0,1 12,10A3.5,3.5 0 0,1 8.5,6.5A3.5,3.5 0 0,1 12,3Z"></path>
+							</svg>
+						</div>
+					</div>
+					<div>
+						<span class="fw-bold display-5 mb-5" data-vanilla-counter="" data-start-at="0" data-end-at="250" data-time="1000" data-delay="60" data-format="{}">250</span>
+						<p class="lead" editable="inline"><b>Employees</b> in the World</p>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+
+
+
+
+<div class="container">
+	<div class="row row-cols-1 row-cols-lg-3 align-items-stretch g-4 py-5">
+		<div class="col">
+			<div class="lc-block card card-cover h-100 overflow-hidden text-white bg-dark rounded-5 shadow-lg" lc-helper="background" style="background-image: url(&quot;https://images.unsplash.com/photo-1507499739999-097706ad8914?crop=entropy&amp;cs=tinysrgb&amp;fit=crop&amp;fm=jpg&amp;ixid=MnwzNzg0fDB8MXxzZWFyY2h8MTB8fHNwYWNlfGVufDB8MXx8fDE2MjE4NDQ2MTY&amp;ixlib=rb-1.2.1&amp;q=80&amp;w=1080&amp;h=768&quot;); background-size: cover;" title="">
+				<div class="d-flex flex-column h-100 p-5 pb-3 text-white text-shadow-1">
+					<div class="lc-block pt-5 mt-5 mb-4">
+						<div editable="rich">
+							<h2 class="display-6 lh-1 fw-bold">Short title, long jacket</h2>
+							<p>Quickly design and customize responsive mobile-first sites with Bootstrap.</p>
+						</div>
+					</div>
+					<ul class="lc-block d-flex list-unstyled mt-auto ms-auto"><a class="btn btn-link btn-sm text-white " href="#" role="button">Read more</a></ul>
+				</div>
+			</div>
+		</div>
+
+		<div class="col">
+			<div class="lc-block card card-cover h-100 overflow-hidden text-white bg-dark rounded-5 shadow-lg" lc-helper="background" style="background:url(https://images.unsplash.com/photo-1444910958049-f45a1ac7ace5?crop=entropy&amp;amp;cs=tinysrgb&amp;amp;fit=crop&amp;amp;fm=jpg&amp;amp;ixid=MnwzNzg0fDB8MXxzZWFyY2h8MTA2fHxmbG93ZXJzfGVufDB8MHx8fDE2MjE1MDQwMjg&amp;amp;ixlib=rb-1.2.1&amp;amp;q=80&amp;amp;w=1080&amp;amp;h=76)  center / cover no-repeat;">
+				<div class="d-flex flex-column h-100 p-5 pb-3 text-white text-shadow-1">
+					<div class="lc-block pt-5 mt-5 mb-4">
+						<div editable="rich">
+							<h2 class="display-6 lh-1 fw-bold">Much longer title that wraps to multiple lines</h2>
+							<p>Quickly design and customize responsive mobile-first sites with Bootstrap.</p>
+						</div>
+					</div>
+					<ul class="lc-block d-flex list-unstyled mt-auto ms-auto"><a class="btn btn-link btn-sm text-white " href="#" role="button">Read more</a></ul>
+				</div>
+			</div>
+		</div>
+
+		<div class="col">
+			<div class="lc-block card card-cover h-100 overflow-hidden text-white bg-dark rounded-5 shadow-lg" lc-helper="background" style="background:url(https://images.unsplash.com/photo-1580133748682-099a97d17e6c?crop=entropy&amp;amp;cs=tinysrgb&amp;amp;fit=crop&amp;amp;fm=jpg&amp;amp;ixid=MnwzNzg0fDB8MXxzZWFyY2h8MTV8fGplbGx5JTIwZmlzaHxlbnwwfDB8fHwxNjIxNTA0MDU1&amp;amp;ixlib=rb-1.2.1&amp;amp;q=80&amp;amp;w=1080&amp;amp;h=768)  center / cover no-repeat;">
+				<div class="d-flex flex-column h-100 p-5 pb-3 text-white text-shadow-1">
+					<div class="lc-block pt-5 mt-5 mb-4">
+						<div editable="rich">
+							<h2 class="display-6 lh-1 fw-bold">Another longer title belongs here</h2>
+							<p>Quickly design and customize responsive mobile-first sites with Bootstrap.</p>
+						</div>
+					</div>
+					<ul class="lc-block d-flex list-unstyled mt-auto ms-auto"><a class="btn btn-link btn-sm text-white " href="#" role="button">Read more</a></ul>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+
+
+@code{
+	private int @counter = 11;
+
+	private void uvecaj()
+	{
+		counter++;
+		if (counter > 99) counter = counter-100;
+	}
+}
