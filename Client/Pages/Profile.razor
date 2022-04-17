@@ -1,0 +1,149 @@
+﻿@page "/profile"
+
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.13.1/css/all.min.css" integrity="sha256-2XFplPlrFClt0bIdPgpz8H7ojnk10H69xRqd9+uTShA=" crossorigin="anonymous" />
+
+<div class="container-xl px-4 mt-4">
+   
+    <hr class="mt-0 mb-4">
+    <div class="row">
+        <div class="col-lg-4 mb-4">
+            <!-- Billing card 1-->
+            <div class="card h-100 border-start-lg border-start-primary">
+                <div class="card-body">
+                    <div class="small text-muted">Current monthly bill</div>
+                    <div class="h3">$20.00</div>
+                    <a class="text-arrow-icon small" href="#!">
+                        Switch to yearly billing
+                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-arrow-right"><line x1="5" y1="12" x2="19" y2="12"></line><polyline points="12 5 19 12 12 19"></polyline></svg>
+                    </a>
+                </div>
+            </div>
+        </div>
+        <div class="col-lg-4 mb-4">
+            <!-- Billing card 2-->
+            <div class="card h-100 border-start-lg border-start-secondary">
+                <div class="card-body">
+                    <div class="small text-muted">Next payment due</div>
+                    <div class="h3">July 15</div>
+                    <a class="text-arrow-icon small text-secondary" href="#!">
+                        View payment history
+                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-arrow-right"><line x1="5" y1="12" x2="19" y2="12"></line><polyline points="12 5 19 12 12 19"></polyline></svg>
+                    </a>
+                </div>
+            </div>
+        </div>
+        <div class="col-lg-4 mb-4">
+            <!-- Billing card 3-->
+            <div class="card h-100 border-start-lg border-start-success">
+                <div class="card-body">
+                    <div class="small text-muted">Current plan</div>
+                    <div class="h3 d-flex align-items-center">Freelancer</div>
+                    <a class="text-arrow-icon small text-success" href="#!">
+                        Upgrade plan
+                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-arrow-right"><line x1="5" y1="12" x2="19" y2="12"></line><polyline points="12 5 19 12 12 19"></polyline></svg>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+ 
+
+
+    <div class="card card-header-actions mb-4">
+        <div class="card-header">
+           <div class="d-flex align-items-center justify-content-between">
+                  Projects
+            <button class="btn btn-sm btn-primary" type="button">Add new project</button>
+           </div>
+        </div>
+        <div class="card-body px-0">
+            <!-- Payment method 1-->
+            <div class="d-flex align-items-center justify-content-between px-4">
+                <div class="d-flex align-items-center">
+                    <div class="ms-1">
+                        <div class="">Blazor</div>
+                        <div class="small text-muted">Udemy</div>
+
+                    </div>
+                </div>
+                <div class="ms-4 small">
+                    <div class="badge bg-light text-dark me-3">Default</div>
+                    <a class="link-secondary ps-1" href="#!">Edit</a>
+                    <a class="link-secondary ps-1" href="#!">History</a>
+                </div>
+            </div>
+            <hr>
+            <!-- Payment method 2-->
+            <div class="d-flex align-items-center justify-content-between px-4">
+              <div class="d-flex align-items-center">
+                    <div class="ms-1">
+                        <div class="">German language</div>
+                        <div class="small text-muted">Duolingo and Memrise</div>
+
+                    </div>
+                </div>
+                <div class="ms-4 small">
+                        <a class="link-secondary ps-1" href="#!">Make default</a>
+                        <a class="link-secondary ps-1" href="#!">Edit</a>
+                    <a class="link-secondary ps-1" href="#!">History</a>
+                </div>
+            </div>
+         
+        </div>
+    </div>
+
+
+
+
+
+    <div class="card mb-4 mt-4">
+        <div class="card-header">Tracking History for last 7 days</div>
+        <div class="card-body p-0">
+            <!-- Billing history table-->
+            <div class="table-responsive table-billing-history">
+                <table class="table mb-0">
+                    <thead>
+                        <tr>
+                            <th class="border-gray-200" scope="col">Transaction ID</th>
+                            <th class="border-gray-200" scope="col">Project</th>
+                            <th class="border-gray-200" scope="col">Date</th>
+                            <th class="border-gray-200" scope="col">Time</th>
+                            <th class="border-gray-200" scope="col">Desc</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>#39201</td>
+                            <td>German language</td>
+                            <td>06/15/2021</td>
+                            <td>55  <span class="badge bg-light ">minutes</span></td>
+                            <td><a class="link-secondary" type="button">Details</a></td>
+                        </tr>
+
+
+                         <tr>
+                            <td>#39445</td>
+                            <td>Blazor</td>
+                            <td>06/15/2021</td>
+                            <td>25  <span class="badge bg-light ">minutes</span></td>
+                            <td><a class="link-secondary" type="button">Details</a></td>
+                        </tr>
+
+
+                     
+                         <tr>
+                            <td>#39445</td>
+                            <td>Blazor</td>
+                            <td>06/15/2021</td>
+                            <td>35  <span class="badge bg-light ">minutes</span></td>
+                            <td><a class="link-secondary" type="button">Details</a></td>
+                        </tr>
+
+                      
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
