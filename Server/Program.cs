@@ -1,6 +1,7 @@
 global using blamato.Shared;
 global using blamato.Shared.Models;
 using blamato.Server.Data;
+using blamato.Server.Services.AuthService;
 using Microsoft.AspNetCore.ResponseCompression;
 using Microsoft.EntityFrameworkCore;
 
@@ -20,12 +21,16 @@ builder.Services.AddDbContext<DataContext>(options =>
 
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
+builder.Services.AddScoped<IAuthService, AuthService>();
 
 
 var app = builder.Build();
 
 app.UseSwaggerUI();
 app.UseSwagger();
+
+
+
 
 
 // Configure the HTTP request pipeline.
