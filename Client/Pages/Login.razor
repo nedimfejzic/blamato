@@ -1,17 +1,28 @@
 ﻿@page "/login"
+@using Microsoft.AspNetCore.WebUtilities
+
+@inject IAuthService _authService
+@inject ILocalStorageService _localStorage
+@inject NavigationManager _navigationManager
+@inject AuthenticationStateProvider _authenticationStateProvider
+
+
+
     <div class="container">
         <div class="row">
+           
+            <EditForm Model="user" OnValidSubmit="@HandleLogin">
+    <DataAnnotationsValidator />
             <div class="col-xl-4 offset-xl-4">
                 <div class="login-form mt-4 p-4" style="background-color: #F8F8F8;">
-                    <form action="" method="" class="row g-3">
                         <Heading Size="HeadingSize.Is4" TextColor="TextColor.Primary">Welcome back!</Heading>
                         <div class="col-12">
 
 
 
                             <label>Email</label>
-                            <input type="text" name="username" class="form-control" placeholder="mail@outlook.com">
-
+                           <InputText id="email" @bind-Value="user.Email" class="form-control"></InputText>
+        <ValidationMessage For="@(() => user.Email)" />
 
 
 
@@ -19,14 +30,25 @@
                         </div>
                         <div class="col-12">
                             <label>Password</label>
-                            <input type="password" name="password" class="form-control" placeholder="Password">
+                                <InputText id="password" @bind-Value="user.Password" class="form-control" type="password"></InputText>
+        <ValidationMessage For="@(()=> user.Password)" />
                         </div>
 
-                        <div class="col-12">
-        <Button Color="Color.Primary" Block @onclick="SaveMe">Login</Button>
 
+                        <div class="mx-3 bold">
+                             <div class="text-danger">
+    <span>@errorMessage</span>
+</div>
                         </div>
-                    </form>
+
+
+
+                        <div class="col-12 mt-3">
+        <Button Color="Color.Primary" Block Type="ButtonType.Submit">Login</Button>
+
+
+        
+                        </div>
                     <hr class="mt-4">
                     <div class="col-12">
                         <p class="text-center mb-0">Have not account yet? <Link To="/registration" TextColor="TextColor.Primary">Register</Link></p>
@@ -34,6 +56,8 @@
                     </div>
                 </div>
             </div>
+</EditForm>
+
         </div>
     </div>
 
@@ -41,8 +65,37 @@
 
     @code{
 
-    private async Task SaveMe()
+        private UserLoginDTO user = new UserLoginDTO();
+        private string errorMessage = string.Empty;
+    private string returnUrl = string.Empty;
+
+        
+    protected override void OnInitialized()
     {
-        Console.WriteLine("btn login clicked");
+        var uri = _navigationManager.ToAbsoluteUri(_navigationManager.Uri);
+        if (QueryHelpers.ParseQuery(uri.Query).TryGetValue("returnUrl", out var url))
+        {
+            returnUrl = url;
+        };
+    }
+
+    private async Task HandleLogin()
+    {
+      Console.WriteLine("login page handle fired");
+        var result = await _authService.Login(user);
+
+        if (result.Sucess)
+        {
+            errorMessage = "";
+
+            await _localStorage.SetItemAsync("authToken", result.Data);
+            await _authenticationStateProvider.GetAuthenticationStateAsync();
+
+            _navigationManager.NavigateTo(returnUrl);
+        }
+        else
+        {
+            errorMessage = result.Message;
+        }
     }
     }

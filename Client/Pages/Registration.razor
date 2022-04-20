@@ -1,53 +1,82 @@
 ﻿@page "/registration"
+@inject IAuthService _authService
+
+<PageTitle>Registration page</PageTitle>
+
+
+<EditForm Model="user" OnValidSubmit="@HandleRegistration">
     <div class="container">
         <div class="row">
+
+            <DataAnnotationsValidator />
+
             <div class="col-md-4 offset-md-4">
                 <div class="login-form mt-4 p-4" style="background-color: #F8F8F8;">
-                    <form action="" method="" class="row g-3">
-                        <Heading Size="HeadingSize.Is4" TextColor="TextColor.Primary">Register and start tracking!</Heading>
-                        <div class="col-12">
+                    <Heading Size="HeadingSize.Is4" TextColor="TextColor.Primary">Register and start tracking!</Heading>
+                    <div class="col-12">
+
+                        <label>Email</label>
+                        <InputText id="email" @bind-Value="user.Email" class="form-control"></InputText>
+                        <ValidationMessage For="@(() => user.Email)" />
+
+                    </div>
+                    <div class="col-12">
+                        <label>Password</label>
+                        <InputText id="password" @bind-Value="user.Password" class="form-control" type="password"></InputText>
+                        <ValidationMessage For="@(()=> user.Password)" />
+                    </div>
+
+                    <div class="col-12">
+                        <label>Password</label>
+                        <InputText id="passwordConfirm" @bind-Value="user.PasswordConfirm" class="form-control" type="password"></InputText>
+                        <ValidationMessage For="@(()=> user.PasswordConfirm)" />
+                    </div>
+
+                    <div class="col-12">
+                        <Button Color="Color.Primary" Block Type="ButtonType.Submit">Register</Button>
+
+                    </div>
 
 
 
-                            <label>Email</label>
-                            <input type="text" name="username" class="form-control" placeholder="mail@outlook.com">
-
-
-
-
-
-                        </div>
-                        <div class="col-12">
-                            <label>Password</label>
-                            <input type="password" name="password" class="form-control" placeholder="Password">
-                        </div>
-
-                             <div class="col-12">
-                            <label>Password</label>
-                            <input type="password" name="password" class="form-control" placeholder="Password">
-                        </div>
-
-                        <div class="col-12">
-        <Button Color="Color.Primary" Block @onclick="SaveMe">Register</Button>
-
-                        </div>
-                    </form>
+                    <div class="@messageCssClass">@errorMessage</div>
                     <hr class="mt-4">
                     <div class="col-12">
                         <p class="text-center mb-0">Have not account yet? <Link To="/registration" TextColor="TextColor.Primary">Register</Link></p>
-                          
+
                     </div>
                 </div>
             </div>
         </div>
     </div>
+</EditForm>
 
 
 
-    @code{
 
-    private async Task SaveMe()
+    @code {
+    UserRegister user = new UserRegister();
+    string errorMessage = string.Empty;
+    string messageCssClass = string.Empty;
+
+
+
+
+    private async Task HandleRegistration()
     {
-        Console.WriteLine("btn login clicked");
+        Console.WriteLine($"Register user with the email  {user.Email}");
+
+        var result = await _authService.Register(user);
+        if (result.Sucess)
+        {
+            errorMessage = string.Empty;
+            messageCssClass = "text-success";
+        }
+        else
+        {
+              errorMessage = result.Message;
+            messageCssClass = "text-danger";
+        }
+
     }
     }

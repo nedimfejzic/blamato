@@ -1,4 +1,6 @@
-﻿
+﻿@inject ILocalStorageService _localStorage
+@inject AuthenticationStateProvider _authenticationStateProvider
+@inject NavigationManager _navigationManager
 
   <nav class="navbar navbar-expand-lg navbar-light " aria-label="Ninth navbar example">
     <div class="container-xl">
@@ -28,9 +30,22 @@
           <li class="nav-item dropdown">
             <a class="nav-link dropdown-toggle" href="#" id="dropdown07XL" data-bs-toggle="dropdown" aria-expanded="false">User</a>
             <ul class="dropdown-menu" aria-labelledby="dropdown07XL">
-              <li><a class="dropdown-item" href="/login">Login</a></li>
-              <li><a class="dropdown-item" href="/registration">Register an account</a></li>
-              <li><a class="dropdown-item" href="/test">Test page</a></li>
+
+
+
+                <AuthorizeView>
+            <Authorized>
+                <a href="profile" class="dropdown-item">Profile</a>
+                <hr />
+                <button class="dropdown-item" @onclick="Logout">Logout</button>
+            </Authorized>
+            <NotAuthorized>
+                <a href="register" class="dropdown-item">Register</a>
+                <a href="login?returnUrl=@_navigationManager.ToBaseRelativePath(_navigationManager.Uri)" class="dropdown-item">Login</a>
+            </NotAuthorized>
+        </AuthorizeView>
+
+
             </ul>
           </li>
         </ul>
@@ -44,6 +59,16 @@
 
   
 @code {
+
+
+    
+    private async Task Logout()
+    {
+        await _localStorage.RemoveItemAsync("authToken");
+        await _authenticationStateProvider.GetAuthenticationStateAsync();
+        _navigationManager.NavigateTo("");
+
+    }
 
     //private bool collapseNavMenu = true;
 
