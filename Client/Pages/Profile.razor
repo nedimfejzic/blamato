@@ -1,6 +1,8 @@
 ﻿@page "/profile"
+@using blamato.Shared.Models
 @attribute [Authorize]
 @inject IAuthService _authService
+@inject IProjectService _projectService
 
 
     <AuthorizeView>
@@ -9,6 +11,23 @@
 <div class="container-xl px-4 mt-4">
    
 <h1>you are logged in with <i>@context.User.Identity.Name</i></h1>
+
+
+
+@if(projekti == null)
+{
+    <span>Loading projekti</span>
+}
+else if (projekti.Count <= 0)
+{
+    <span>no orders</span>
+}else
+{
+    foreach (var p in projekti)
+    {
+    <p><b>@p.Id - @p.Name</b> - @p.Description - @p.DailyGoal   </p> <hr />
+    }
+}
 
 
 
@@ -153,4 +172,18 @@
             </div>
         </div>
     </div>
-</div></AuthorizeView>
+</div>
+</AuthorizeView>
+
+
+
+@code{
+
+    List<Project> projekti = null;
+
+     protected override async Task OnInitializedAsync()
+    {
+        projekti = await _projectService.GetProjectsAsync();
+
+    }
+}

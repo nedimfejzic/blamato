@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using blamato.Server.Data;
 
@@ -11,9 +12,10 @@ using blamato.Server.Data;
 namespace blamato.Server.Migrations
 {
     [DbContext(typeof(DataContext))]
-    partial class DataContextModelSnapshot : ModelSnapshot
+    [Migration("20220421170724_pomodoroandproject")]
+    partial class pomodoroandproject
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -41,9 +43,6 @@ namespace blamato.Server.Migrations
                         .HasColumnType("int");
 
                     b.Property<int>("TimeSpent")
-                        .HasColumnType("int");
-
-                    b.Property<int>("UserId")
                         .HasColumnType("int");
 
                     b.Property<bool>("Visible")
@@ -80,9 +79,6 @@ namespace blamato.Server.Migrations
 
                     b.Property<DateTime?>("StartingDate")
                         .HasColumnType("datetime2");
-
-                    b.Property<int>("UserId")
-                        .HasColumnType("int");
 
                     b.Property<bool>("Visible")
                         .HasColumnType("bit");

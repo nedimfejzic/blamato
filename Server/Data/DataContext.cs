@@ -9,5 +9,7 @@ namespace blamato.Server.Data
         }
 
         public DbSet<User> Users{ get; set; }
+        public DbSet<Project> Projects{ get; set; }
+        public DbSet<Pomodoro> Pomodoros{ get; set; }
     }
 }
