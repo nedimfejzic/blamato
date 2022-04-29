@@ -25,4 +25,7 @@ https://zealous-pond-0899d9e03.1.azurestaticapps.net/
 - Setting (duration, pause, autostart,..)
 - Complete Project and Task entities to enable saving completed tasks
 
+## Screenshots
 
+![png](image1.png)
+![png](image2.png)
