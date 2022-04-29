@@ -1,0 +1,94 @@
+﻿@using blamato.Shared.Models
+@inject IProjectService _projectService
+
+
+<EditForm Model="project" OnValidSubmit="@HandleLogin">
+    <DataAnnotationsValidator />
+    <div class="">
+
+        <div class="col-12 mt-2">
+            <label>Name</label>
+            <InputText @bind-Value="project.Name" class="form-control"></InputText>
+            <ValidationMessage For="@(() => project.Name)" style="color: red;" />
+        </div>
+
+        <div class="col-12 mt-2">
+            <label>Description</label>
+            <InputText @bind-Value="project.Description" class="form-control"></InputText>
+            <ValidationMessage For="@(() => project.Description)"  style="color: red;" />
+        </div>
+
+         <div class="col-12 mt-2">
+            <label>Daily goal</label>
+            <NumericPicker TValue="int" @bind-Value="project.DailyGoal" class="form-control" Min="1" Max="20"  Decimals="0"/>
+            <ValidationMessage For="@(() => project.DailyGoal)"  style="color: red;" />
+        </div>
+
+
+
+           <div class="col-12 mt-2">
+            <label>Starting date</label>
+           <DateEdit TValue="DateTime?" @bind-Date="@project.StartingDate" />
+            <ValidationMessage For="@(() => project.StartingDate)"  style="color: red;" />
+        </div>
+
+        
+           <div class="col-12 mt-2">
+            <label>Ending date</label>
+           <DateEdit TValue="DateTime?" @bind-Date="@project.EndingDate" />
+            <ValidationMessage For="@(() => project.EndingDate)"  style="color: red;" />
+        </div>
+
+
+
+
+
+
+        <div class="mx-3 bold">
+            <div class="text-danger">
+                <span>@errorMessage</span>
+            </div>
+        </div>
+
+        <Button Color="Color.Primary" Type="ButtonType.Submit" Class="mt-4">Create project</Button>
+        <Button Color="Color.Primary" Outline Type="ButtonType.Button" Class="mt-4" @onclick="CancelHandle">Cancel</Button>
+
+        <hr class="mt-4">
+    </div>
+</EditForm>
+
+
+
+@code {
+    private ProjectCreateDTO project= new ProjectCreateDTO();
+    private string errorMessage = string.Empty;
+
+
+    private async Task HandleLogin()
+    {
+
+
+        Console.WriteLine("create page handle fired");
+        var result = await _projectService.Create(project);
+
+        if (result.Sucess)
+        {
+            errorMessage = "";
+        Console.WriteLine("spaseno sve");
+
+        }
+        else
+        {
+            errorMessage = result.Message;
+        }
+
+
+
+    }
+
+
+       private void CancelHandle()
+    {
+        Console.WriteLine("you should redirect me");
+    }
+}

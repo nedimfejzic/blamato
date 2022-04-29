@@ -23,5 +23,12 @@ namespace blamato.Server.Controllers
             return Ok(result);
         }
 
+
+        [HttpPost("Create"), Authorize]
+        public async Task<ActionResult<ServiceResponse<Project>>> CreateProject(Project project)
+        {
+            var result = await _projectService.CreateProject(project);
+            return Ok(result);
+        }
     }
 }

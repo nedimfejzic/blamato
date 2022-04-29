@@ -10,4 +10,5 @@ namespace blamato.Client.Services.AuthService
         Task<ServiceResponse<bool>> ChangePassword(UserChangePasswordDTO request);
         Task<bool> IsUserAuthenticated();
     }
+
 }

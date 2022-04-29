@@ -6,5 +6,7 @@ namespace blamato.Client.Services.ProjectService
     public interface IProjectService
     {
         Task<List<Project>> GetProjectsAsync();
+        Task<ServiceResponse<Project>> Create(ProjectCreateDTO request);
+
     }
 }

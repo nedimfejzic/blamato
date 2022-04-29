@@ -17,7 +17,7 @@ namespace blamato.Shared.Models
         public DateTime ? EndingDate { get; set; }
         public bool Visible { get; set; } = true;
 
-        public List<Pomodoro> Pomodoros { get; set; }
+        public List<Pomodoro>? Pomodoros { get; set; }
 
     }
 }
