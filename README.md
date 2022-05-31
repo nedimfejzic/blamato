@@ -7,12 +7,6 @@ Pomodoro-like tracking app. Click start and focus. With optional background soun
 
 
 
-## Demo
--- Only front is deployed for now, so there is no saving funcionalities for now.
-
-https://zealous-pond-0899d9e03.1.azurestaticapps.net/
-
-
 ## Tech Stack
 
 **Client:** Blazor WASM, Blazorise
